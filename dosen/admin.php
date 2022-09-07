@@ -62,7 +62,6 @@
             </div>
         </div>
     </nav>
-    <!--Mobile Menu-->
     <div class="hidden" id="mobile-menu">
         <div class="px-2 pt-2 pb-3 space-y-1">
             <a href="#" class="bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium">Dashboard</a>
@@ -74,7 +73,6 @@
             <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Calendar</a>
         </div>
     </div>
-    <!--make 4 card inline with button-->
     <div class="flex flex-wrap justify-center" id="card-mahasiswa " >
         <div class="w-1/4 p-4">
             <div class="bg-white border rounded shadow">
@@ -152,7 +150,6 @@
             document.getElementById("mobile-menu").classList.toggle("hidden");
         });
 
-        //if resize to mobile, make the card 1 column only and place in center
         window.addEventListener('resize', function(event) {
             if (window.innerWidth < 640) {
                 document.getElementById("card-mahasiswa").classList.remove("flex");
