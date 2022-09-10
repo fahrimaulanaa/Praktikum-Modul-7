@@ -73,7 +73,7 @@
             <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Calendar</a>
         </div>
     </div>
-    <div class="flex flex-wrap justify-center" id="card-mahasiswa " >
+    <div class="flex flex-wrap justify-center" id="card-mahasiswa ">
         <div class="w-1/4 p-4">
             <div class="bg-white border rounded shadow">
                 <div class="border-b p-3">
@@ -94,7 +94,7 @@
                     <div class="flex items-center justify-between mt-4">
                         <a href="tambah.php" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" target="blank">Tambah Dosen</a>
                     </div>
-                    
+
                 </div>
             </div>
         </div>
@@ -115,6 +115,10 @@
                         <span class="text-green-500 pr-1"><i class="fas fa-caret-up"></i> 3.55%</span>
                         <span class="whitespace-no-wrap">Since last month</span>
                     </div>
+                    <!--make disabled button-->
+                    <div class="flex items-center justify-between mt-4">
+                        <a href="tambah.php" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" target="blank">Tambah Mahasiswa</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -124,7 +128,20 @@
                     <h5 class="font-bold uppercase text-gray-600">Jumlah Mata Kuliah</h5>
                 </div>
                 <div class="p-5">
-                    <h3 class="text-3xl font-bold text-center text-gray-600">100</h3>
+                    <?php
+                    include "conncet.php";
+                    $sql = "SELECT * FROM matakuliah";
+                    $result = mysqli_query($connect, $sql);
+                    $resultCheck = mysqli_num_rows($result);
+                    ?>
+                    <h3 class="text-3xl text-gray-700 font-bold leading-none mb-3"><?php echo $resultCheck; ?></h3>
+                    <div class="text-sm text-gray-600">
+                        <span class="text-green-500 pr-1"><i class="fas fa-caret-up"></i> 3.55%</span>
+                        <span class="whitespace-no-wrap">Since last month</span>
+                    </div>
+                    <div class="flex items-center justify-between mt-4">
+                        <a href="/chicken/matkul/form-create.php" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" target="blank">Tambah Mata Kuliah</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -139,7 +156,183 @@
             </div>
         </div>
     </div>
+    <!--show all dosen in a table with action to delete or edit-->
+    <div class="flex flex-wrap justify-center" id="card-dosen">
+        <div class="w-full p-4">
+            <div class="bg-white border rounded shadow">
+                <div class="border-b p-3">
+                    <h5 class="font-bold uppercase text-gray-600">Daftar Dosen</h5>
+                </div>
+                <div class="p-5">
+                    <table class="w-full p-5 text-gray-700" border="1" colspan="1">
+                        <thead>
+                            <tr>
+                                <th class="text-left text-blue-900">ID Dosen</th>
+                                <th class="text-left text-blue-900">Nama Dosen</th>
+                                <th class="text-left text-blue-900">Telefon Dosen</th>
+                                <th class="text-left text-blue-900">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            include "conncet.php";
+                            $sql = "SELECT * FROM dosen";
+                            $result = mysqli_query($connect, $sql);
+                            $resultCheck = mysqli_num_rows($result);
+                            if ($resultCheck > 0) {
+                                $i = 1;
+                                while ($row = mysqli_fetch_assoc($result)) {
+                            ?>
+                                    <tr>
+                                        <td><?php echo $row['id_dosen']; ?></td>
+                                        <td><?php echo $row['nama_dosen']; ?></td>
+                                        <td><?php echo $row['telefon_dosen']; ?></td>
+                                        <td>
+                                            <a href="edit.php?id_dosen=<?php echo $row['id_dosen']; ?>" class=" hover:bg-blue-700 text-black font-bold py-2 px-4 rounded-full hover:text-white">Edit</a>
+                                            <a href="delete.php?nidn=<?php echo $row['id_dosen']; ?>" class=" hover:bg-red-700 text-black font-bold py-2 px-4 rounded-full hover:text-white">Delete</a>
+                                        </td>
+                                    </tr>
+                            <?php
+                                    $i++;
+                                }
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--show all mahasiswa in a table with action to delete or edit-->
+    <div class="flex flex-wrap justify-center" id="card-mahasiswa">
+        <div class="w-full p-4">
+            <div class="bg-white border rounded shadow">
+                <div class="border-b p-3">
+                    <h5 class="font-bold uppercase text-gray-600">Daftar Mahasiswa</h5>
+                </div>
+                <div class="p-5">
+                    <table class="w-full p-5 text-gray-700" border="1" colspan="1">
+                        <thead>
+                            <tr>
+                                <th class="text-left text-blue-900">NIM</th>
+                                <th class="text-left text-blue-900">Nama Mahasiswa</th>
+                                <th class="text-left text-blue-900">Telefon Mahasiswa</th>
+                                <th class="text-left text-blue-900">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            include "conncet.php";
+                            $sql = "SELECT * FROM mahasiswa";
+                            $result = mysqli_query($connect, $sql);
+                            $resultCheck = mysqli_num_rows($result);
+                            if ($resultCheck > 0) {
+                                $i = 1;
+                                while ($row = mysqli_fetch_assoc($result)) {
+                            ?>
+                                    <tr>
+                                        <td><?php echo $row['id_mahasiswa']; ?></td>
+                                        <td><?php echo $row['nama_mahasiswa']; ?></td>
+                                        <td><?php echo $row['telefon_mahasiswa']; ?></td>
+                                        <td>
+                                            <!--Select menu-->
+                                            <select name="action" id="action" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+                                                <option value="edit">Edit</option>
+                                                <option value="delete">Delete</option>
+                                            </select>
+                                    </tr>
+                            <?php
+                                    $i++;
+                                }
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <!--chuck norris joke from API fetch-->
+    <div class="flex flex-wrap justify-center " id="card-jok">
+        <div class="w-full p-4">
+            <div class="bg-white border rounded shadow">
+                <div class="border-b p-3">
+                    <h5 class="font-bold uppercase text-gray-600">Random Joke (Refresh for new Joke)</h5>
+                </div>
+                <div class="p-5">
+                    <div class="flex flex-wrap">
+                        <div class="w-full md:w-1/2 p-3">
+                            <div class="bg-white border rounded shadow p-2">
+                                <div class="flex flex-col">
+                                    <div class="flex-1 p-6 flex flex-col justify-between">
+                                        <div class="flex-1">
+                                            <p class="text-xl font-semibold text-gray-900">
+                                                <span id="joke"></span>
+                                            </p>
+                                        </div>
+                                        <div class="mt-6 flex items-center">
+                                            <div class="flex-shrink-0">
+                                                <img class="h-10 w-10 rounded-full" src="https://api.chucknorris.io/img/chucknorris_logo_colored_small.png" alt="">
+                                            </div>
+                                            <div class="ml-3">
+                                                <p class="text-sm font-medium text-gray-900" id="chuck-norris">
+                                                </p>
+                                                <div class="flex space-x-1 text-sm text-gray-500">
+                                                    <time datetime="2020-03-16">
+                                                        16 Mar 2020
+                                                    </time>
+                                                    <span aria-hidden="true">
+                                                        &middot;
+                                                    </span>
+                                                    <span>
+                                                        6 min read
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-full md:w-1/2 p-3">
+                            <div class="bg-white border rounded shadow p-2">
+                                <div class="flex flex-col">
+                                    <div class="flex-1 p-6 flex flex-col justify-between">
+                                        <div class="flex-1">
+                                            <p class="text-xl font-semibold text-gray-900">
+                                                <span id="joke2"></span>
+                                            </p>
+                                        </div>
+                                        <div class="mt-6 flex items-center">
+                                            <div class="flex-shrink-0">
+                                                <img class="h-10 w-10 rounded-full" src="https://api.chucknorris.io/img/chucknorris_logo_colored_small.png" alt="">
+                                            </div>
+                                            <div class="ml-3">
+                                                <p class="text-sm font-medium text-gray-900" id="covid">
+                                                </p>
+                                                <div class="flex space-x-1 text-sm text-gray-500">
+                                                    <time datetime="2020-03-16">
+                                                        16 Mar 2020
+                                                    </time>
+                                                    <span aria-hidden="true">
+                                                        &middot;
+                                                    </span>
+                                                    <span>
+                                                        6 min read
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <script>
         window.addEventListener('resize', function(event) {
             if (window.innerWidth > 640) {
@@ -160,6 +353,22 @@
                 document.getElementById("card-mahasiswa").classList.add("flex-wrap");
                 document.getElementById("card-mahasiswa").classList.add("justify-center");
             }
+        });
+
+        fetch('https://api.chucknorris.io/jokes/random')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("chuck-norris").innerHTML = data.value;
+            });
+        //get Info Covid
+        fetch('https://data.covid19.go.id/public/api/update.json')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("covid").innerHTML = data.value;
+            });
+
+        document.getElementById("button-toogle-action").addEventListener("click", function() {
+            document.getElementById("action-dropdown").classList.remove("hidden");
         });
     </script>
 </body>

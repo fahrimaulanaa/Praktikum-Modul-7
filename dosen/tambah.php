@@ -10,21 +10,20 @@
 </head>
 
 <body>
-    <h1 align="center" >Tambah dosen</h1>
-    <br>
-    <br>    
-    <table align="center">
-        <form action="tambah.php" method="post">
+    <h1 align="center">Tambah Data Dosen</h1>
+    <!--table in center and bordered-->
+    <table class="table table-bordered table-striped table-hover" align="center">
+        <form action="tambah.php" method="POST">
             <tr>
-                <td>Id</td>
+                <td>ID Dosen:</td>
                 <td><input type="text" name="id_dosen"></td>
             </tr>
             <tr>
-                <td>Nama</td>
+                <td>Nama Dosen:</td>
                 <td><input type="text" name="nama_dosen"></td>
             </tr>
             <tr>
-                <td>Telefon</td>
+                <td>Nomor Telefon:</td>
                 <td><input type="text" name="telefon_dosen"></td>
             </tr>
             <tr>
