@@ -136,7 +136,7 @@
                     ?>
                     <h3 class="text-3xl text-gray-700 font-bold leading-none mb-3"><?php echo $resultCheck; ?></h3>
                     <div class="text-sm text-gray-600">
-                        <span class="text-green-500 pr-1"><i class="fas fa-caret-up"></i> 3.55%</span>
+                        <span class="text-green-500 pr-1"><i class="fas fa-caret-up"></i>3.55%</span>
                         <span class="whitespace-no-wrap">Since last month</span>
                     </div>
                     <div class="flex items-center justify-between mt-4">
@@ -156,20 +156,20 @@
             </div>
         </div>
     </div>
-    <!--show all dosen in a table with action to delete or edit-->
-    <div class="flex flex-wrap justify-center" id="card-dosen">
+    <!--show all dosen in a table and make pagination every 20 data-->
+    <div class="flex flex-wrap justify-center" id="table-dosen">
         <div class="w-full p-4">
             <div class="bg-white border rounded shadow">
                 <div class="border-b p-3">
-                    <h5 class="font-bold uppercase text-gray-600">Daftar Dosen</h5>
+                    <h5 class="font-bold uppercase text-gray-600">Data Dosen</h5>
                 </div>
                 <div class="p-5">
-                    <table class="w-full p-5 text-gray-700" border="1" colspan="1">
+                    <table class="w-full p-5 text-gray-700" colspan="3">
                         <thead>
                             <tr>
                                 <th class="text-left text-blue-900">ID Dosen</th>
-                                <th class="text-left text-blue-900">Nama Dosen</th>
-                                <th class="text-left text-blue-900">Telefon Dosen</th>
+                                <th class="text-left text-blue-900">Nama</th>
+                                <th class="text-left text-blue-900">No. Telp</th>
                                 <th class="text-left text-blue-900">Aksi</th>
                             </tr>
                         </thead>
@@ -180,7 +180,6 @@
                             $result = mysqli_query($connect, $sql);
                             $resultCheck = mysqli_num_rows($result);
                             if ($resultCheck > 0) {
-                                $i = 1;
                                 while ($row = mysqli_fetch_assoc($result)) {
                             ?>
                                     <tr>
@@ -188,12 +187,11 @@
                                         <td><?php echo $row['nama_dosen']; ?></td>
                                         <td><?php echo $row['telefon_dosen']; ?></td>
                                         <td>
-                                            <a href="edit.php?id_dosen=<?php echo $row['id_dosen']; ?>" class=" hover:bg-blue-700 text-black font-bold py-2 px-4 rounded-full hover:text-white">Edit</a>
-                                            <a href="delete.php?nidn=<?php echo $row['id_dosen']; ?>" class=" hover:bg-red-700 text-black font-bold py-2 px-4 rounded-full hover:text-white">Delete</a>
+                                            <a href="edit.php?nidn=<?php echo $row['id_dosen']; ?>" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" target="blank">Edit</a>
+                                            <a href="delete.php?nidn=<?php echo $row['id_dosen']; ?>" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full" target="blank">Delete</a>
                                         </td>
                                     </tr>
                             <?php
-                                    $i++;
                                 }
                             }
                             ?>
@@ -203,6 +201,22 @@
             </div>
         </div>
     </div>
+
+    <div class="pagination">
+        <a href="#">&laquo;</a>
+        <a href="#">1</a>
+        <a class="active" href="#">2</a>
+        <a href="#">3</a>
+        <a href="#">4</a>
+        <a href="#">5</a>
+        <a href="#">6</a>
+        <a href="#">&raquo;</a>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+
     <!--show all mahasiswa in a table with action to delete or edit-->
     <div class="flex flex-wrap justify-center" id="card-mahasiswa">
         <div class="w-full p-4">
@@ -369,6 +383,38 @@
 
         document.getElementById("button-toogle-action").addEventListener("click", function() {
             document.getElementById("action-dropdown").classList.remove("hidden");
+        });
+
+        var table = document.getElementById("table-dosen");
+        var rows = table.rows;
+        var r = 0;
+        for (var i = 0; i < rows.length; i++) {
+            rows[i].style.display = "none";
+        }
+        for (var i = 0; i < 30; i++) {
+            rows[i].style.display = "";
+        }
+        document.getElementById("next").addEventListener("click", function() {
+            if (r < rows.length - 30) {
+                r += 30;
+                for (var i = 0; i < rows.length; i++) {
+                    rows[i].style.display = "none";
+                }
+                for (var i = r; i < r + 30; i++) {
+                    rows[i].style.display = "";
+                }
+            }
+        });
+        document.getElementById("prev").addEventListener("click", function() {
+            if (r > 0) {
+                r -= 30;
+                for (var i = 0; i < rows.length; i++) {
+                    rows[i].style.display = "none";
+                }
+                for (var i = r; i < r + 30; i++) {
+                    rows[i].style.display = "";
+                }
+            }
         });
     </script>
 </body>
