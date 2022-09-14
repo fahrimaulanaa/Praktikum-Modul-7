@@ -1,7 +1,6 @@
 <?php
 
 include "conncet.php";
-
 $kode = $_POST['kode'];
 $nama_matkul = $_POST['nama_matkul'];
 $sks = $_POST['sks'];

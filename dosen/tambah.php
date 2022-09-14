@@ -16,10 +16,9 @@
         <div class="row">
             <div class="col-md-6 offset-md-3">
                 <table class="table table-bordered">
-                    <form action="dosen-tambah.php" method="POST">
+                    <form action="tambah.php" method="POST">
                         <tr>
-                            <td>ID Dosen:</td>
-                            <td><input type="text" name="id_dosen"></td>
+                            <td><input type="hidden" name="id_dosen"></td>
                         </tr>
                         <tr>
                             <td>Nama Dosen:</td>
@@ -38,7 +37,7 @@
             </div>
         </div>
     </div>
-    
+
 </body>
 
 </html>

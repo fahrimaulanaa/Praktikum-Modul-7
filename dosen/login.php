@@ -11,6 +11,7 @@ if(isset($_POST['login'])){
         $_SESSION['username'] = $username;
         $_SESSION['password'] = $password;
         header('Location: admin.php');
+        echo "Berhasil";
     }else{
         echo "Username atau password salah";
     }

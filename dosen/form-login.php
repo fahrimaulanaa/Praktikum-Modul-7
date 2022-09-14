@@ -52,7 +52,7 @@
                 if($row['username'] == $username && $row['password'] == $password){
                     session_start();
                     $_SESSION['username'] = $username;
-                    header('Location: index.php');
+                    header('Location: form-login.php');
                 }else{
                     echo "Gagal";
                 }

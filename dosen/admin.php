@@ -73,7 +73,7 @@ $currentTime = time();
                         <div>
                             <button type="button" class="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white" id="user-menu-button" aria-expanded="false" aria-haspopup="true" id="btn-user-menu">
                                 <span class="sr-only">Open user menu</span>
-                                <a href="logout.php"><img class="h-8 w-8 rounded-full" src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg" alt=""></a>
+                                <a href="logout.php"><h1 class="text-white font-bold">Logout</h1></a>
                             </button>
                         </div>
                         <div class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 hidden" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1" id="user-menu-mini">
@@ -289,23 +289,7 @@ $currentTime = time();
                             <div class="bg-white border rounded shadow p-2">
                                 <div class="flex flex-col">
                                     <div class="flex-1 p-6 flex flex-col justify-between">
-                                        <div class="flex-1">
-                                            <!-- display weather -->
-                                            <div class="report-container">
-                                                <h2><?php echo $data->name; ?> Weather Status</h2>
-                                                <div class="time">
-                                                    <div><?php echo date("l g:i a", $currentTime); ?></div>
-                                                    <div><?php echo date("jS F, Y", $currentTime); ?></div>
-                                                    <div><?php echo ucwords($data->weather[0]->description); ?></div>
-                                                </div>
-                                                <div class="weather-forecast">
-                                                    <img src="https://openweathermap.org/img/w/<?php echo $data->weather[0]->icon; ?>.png" class="weather-icon" /> <?php echo $data->main->temp_max; ?>°C<span class="min-temperature"><?php echo $data->main->temp_min; ?>°C</span>
-                                                </div>
-                                                <div class="time">
-                                                    <div>Humidity: <?php echo $data->main->humidity; ?> %</div>
-                                                    <div>Wind: <?php echo $data->wind->speed; ?> km/h</div>
-                                                </div>
-                                            </div>
+                                        <div class="flex-1">    
                                         </div>
                                         <div class="mt-6 flex items-center">
                                             <div class="flex-shrink-0">
