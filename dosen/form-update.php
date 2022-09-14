@@ -26,7 +26,7 @@ $data = mysqli_fetch_array($query);
                 <div class="w-full h-auto bg-gray-400 hidden lg:block lg:w-1/2 bg-cover rounded-l-lg" style="background-image: url('https://img.freepik.com/free-photo/top-view-laptop-with-diploma-globe_23-2148756575.jpg?w=1060&t=st=1663128352~exp=1663128952~hmac=b89946a0ee8056a4d65f5c70cb4c6a971581de00a8c4162f1b7ec2ae0adf277f')"></div>
                 <div class="w-full lg:w-1/2 p-5 rounded-lg lg:rounded-l-none bg-gray-200">
                     <h3 class="pt-4 text-2xl text-center pb-5">Update Data</h3>
-                    <form class="px-8 pt-6 pb-8 mb-4 bg-white rounded" action="form-update.php" method="POST">
+                    <form class="px-8 pt-6 pb-8 mb-4 bg-white rounded" action="dosen-update.php" method="POST">
                         <div class="mb-4">
                             <label class="block mb-2 text-sm font-bold text-gray-700" for="id_dosen">
                                 ID Dosen
@@ -62,19 +62,3 @@ $data = mysqli_fetch_array($query);
     </div>
 </body>
 </html>
-<?php
-if (isset($_POST['submit'])) {
-    $id_dosen = $_POST['id_dosen'];
-    $nama_dosen = $_POST['nama_dosen'];
-    $telefon_dosen = $_POST['telefon_dosen'];
-
-    $sql = "UPDATE dosen SET nama_dosen='$nama_dosen', telefon_dosen='$telefon_dosen' WHERE id_dosen='$id_dosen'";
-    $query = mysqli_query($connect, $sql);
-
-    if ($query) {
-        header('Location: index.php');
-    } else {
-        header('Location: form-update.php');
-    }
-}
-?>

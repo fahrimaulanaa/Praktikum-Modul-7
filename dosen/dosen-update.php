@@ -2,7 +2,7 @@
 include "conncet.php";
 
 //update data from form-update.php
-if(isset($_POST['update'])){
+if(isset($_POST['submit'])){
     $id_dosen = $_POST['id_dosen'];
     $nama_dosen = $_POST['nama_dosen'];
     $telefon_dosen = $_POST['telefon_dosen'];

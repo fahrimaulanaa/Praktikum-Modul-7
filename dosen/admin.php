@@ -1,8 +1,28 @@
 <?php
 session_start();
-if(!isset($_SESSION['username'])){
+if (!isset($_SESSION['username'])) {
     header('Location: ../dosen/form-login.php');
 }
+?>
+
+<?php
+$apiKey = "1104d98733efed3cf731c744a73c7dd1";
+$cityId = "1636722";
+$googleApiUrl = "https://api.openweathermap.org/data/2.5/weather?id=" . $cityId . "&lang=en&units=metric&APPID=" . $apiKey;
+
+$ch = curl_init();
+
+curl_setopt($ch, CURLOPT_HEADER, 0);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_URL, $googleApiUrl);
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+curl_setopt($ch, CURLOPT_VERBOSE, 0);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+$response = curl_exec($ch);
+
+curl_close($ch);
+$data = json_decode($response);
+$currentTime = time();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -270,9 +290,22 @@ if(!isset($_SESSION['username'])){
                                 <div class="flex flex-col">
                                     <div class="flex-1 p-6 flex flex-col justify-between">
                                         <div class="flex-1">
-                                            <p class="text-xl font-semibold text-gray-900">
-                                                <span id="joke"></span>
-                                            </p>
+                                            <!-- display weather -->
+                                            <div class="report-container">
+                                                <h2><?php echo $data->name; ?> Weather Status</h2>
+                                                <div class="time">
+                                                    <div><?php echo date("l g:i a", $currentTime); ?></div>
+                                                    <div><?php echo date("jS F, Y", $currentTime); ?></div>
+                                                    <div><?php echo ucwords($data->weather[0]->description); ?></div>
+                                                </div>
+                                                <div class="weather-forecast">
+                                                    <img src="https://openweathermap.org/img/w/<?php echo $data->weather[0]->icon; ?>.png" class="weather-icon" /> <?php echo $data->main->temp_max; ?>°C<span class="min-temperature"><?php echo $data->main->temp_min; ?>°C</span>
+                                                </div>
+                                                <div class="time">
+                                                    <div>Humidity: <?php echo $data->main->humidity; ?> %</div>
+                                                    <div>Wind: <?php echo $data->wind->speed; ?> km/h</div>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="mt-6 flex items-center">
                                             <div class="flex-shrink-0">
@@ -366,7 +399,7 @@ if(!isset($_SESSION['username'])){
                                         <td><?php echo $row['kode']; ?></td>
                                         <td><?php echo $row['nama_matkul']; ?></td>
                                         <td><?php echo $row['sks']; ?></td>
-                                        <td><?php echo $row['id_dosen']?></td>
+                                        <td><?php echo $row['id_dosen'] ?></td>
                                         <td>
                                             <!--Select menu-->
                                             <select name="action" id="action" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
@@ -384,95 +417,110 @@ if(!isset($_SESSION['username'])){
                 </div>
             </div>
         </div>
-    <script>
-        window.addEventListener('resize', function(event) {
-            if (window.innerWidth > 640) {
-                document.getElementById("mobile-menu").classList.add("hidden");
-            }
-        });
-        document.getElementById("button-toogle-mobile").addEventListener("click", function() {
-            document.getElementById("mobile-menu").classList.toggle("hidden");
-        });
-
-        window.addEventListener('resize', function(event) {
-            if (window.innerWidth < 640) {
-                document.getElementById("card-mahasiswa").classList.remove("flex");
-                document.getElementById("card-mahasiswa").classList.remove("flex-wrap");
-                document.getElementById("card-mahasiswa").classList.remove("justify-center");
-            } else {
-                document.getElementById("card-mahasiswa").classList.add("flex");
-                document.getElementById("card-mahasiswa").classList.add("flex-wrap");
-                document.getElementById("card-mahasiswa").classList.add("justify-center");
-            }
-        });
-
-        fetch('https://api.chucknorris.io/jokes/random')
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById("chuck-norris").innerHTML = data.value;
+        <script>
+            window.addEventListener('resize', function(event) {
+                if (window.innerWidth > 640) {
+                    document.getElementById("mobile-menu").classList.add("hidden");
+                }
+            });
+            document.getElementById("button-toogle-mobile").addEventListener("click", function() {
+                document.getElementById("mobile-menu").classList.toggle("hidden");
             });
 
-        // F
+            window.addEventListener('resize', function(event) {
+                if (window.innerWidth < 640) {
+                    document.getElementById("card-mahasiswa").classList.remove("flex");
+                    document.getElementById("card-mahasiswa").classList.remove("flex-wrap");
+                    document.getElementById("card-mahasiswa").classList.remove("justify-center");
+                } else {
+                    document.getElementById("card-mahasiswa").classList.add("flex");
+                    document.getElementById("card-mahasiswa").classList.add("flex-wrap");
+                    document.getElementById("card-mahasiswa").classList.add("justify-center");
+                }
+            });
 
-        document.getElementById("button-toogle-action").addEventListener("click", function() {
-            document.getElementById("action-dropdown").classList.remove("hidden");
-        });
+            fetch('https://api.chucknorris.io/jokes/random')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("chuck-norris").innerHTML = data.value;
+                });
 
-        var table = document.getElementById("table-dosen");
-        var rows = table.rows;
-        var r = 0;
-        for (var i = 0; i < rows.length; i++) {
-            rows[i].style.display = "none";
-        }
-        for (var i = 0; i < 30; i++) {
-            rows[i].style.display = "";
-        }
-        document.getElementById("next").addEventListener("click", function() {
-            if (r < rows.length - 30) {
-                r += 30;
-                for (var i = 0; i < rows.length; i++) {
-                    rows[i].style.display = "none";
-                }
-                for (var i = r; i < r + 30; i++) {
-                    rows[i].style.display = "";
-                }
+            // F
+
+            document.getElementById("button-toogle-action").addEventListener("click", function() {
+                document.getElementById("action-dropdown").classList.remove("hidden");
+            });
+
+            var table = document.getElementById("table-dosen");
+            var rows = table.rows;
+            var r = 0;
+            for (var i = 0; i < rows.length; i++) {
+                rows[i].style.display = "none";
             }
-        });
-        document.getElementById("prev").addEventListener("click", function() {
-            if (r > 0) {
-                r -= 30;
-                for (var i = 0; i < rows.length; i++) {
-                    rows[i].style.display = "none";
-                }
-                for (var i = r; i < r + 30; i++) {
-                    rows[i].style.display = "";
-                }
+            for (var i = 0; i < 30; i++) {
+                rows[i].style.display = "";
             }
-        });
-        //make card draggable
-        var card = document.getElementById("card-mahasiswa");
-        var pos1 = 0,
-            pos2 = 0,
-            pos3 = 0,
-            pos4 = 0;
-        if (document.getElementById("card-mahasiswa-header")) {
-            document.getElementById("card-mahasiswa-header").onmousedown = dragMouseDown;
-        } else {
-            card.onmousedown = dragMouseDown;
-        }
-        // make data in table draggable
-        var table = document.getElementById("table-dosen");
-        var rows = table.rows;
-        for (var i = 0; i < rows.length; i++) {
-            rows[i].onmousedown = dragMouseDown;
-        }
-        // if F2 pressed, click tambah dosen button
-        document.addEventListener("keydown", function(event) {
-            if (event.keyCode == 113) {
-                document.getElementById("button-tambah-dosen").click();
+            document.getElementById("next").addEventListener("click", function() {
+                if (r < rows.length - 30) {
+                    r += 30;
+                    for (var i = 0; i < rows.length; i++) {
+                        rows[i].style.display = "none";
+                    }
+                    for (var i = r; i < r + 30; i++) {
+                        rows[i].style.display = "";
+                    }
+                }
+            });
+            document.getElementById("prev").addEventListener("click", function() {
+                if (r > 0) {
+                    r -= 30;
+                    for (var i = 0; i < rows.length; i++) {
+                        rows[i].style.display = "none";
+                    }
+                    for (var i = r; i < r + 30; i++) {
+                        rows[i].style.display = "";
+                    }
+                }
+            });
+            //make card draggable
+            var card = document.getElementById("card-mahasiswa");
+            var pos1 = 0,
+                pos2 = 0,
+                pos3 = 0,
+                pos4 = 0;
+            if (document.getElementById("card-mahasiswa-header")) {
+                document.getElementById("card-mahasiswa-header").onmousedown = dragMouseDown;
+            } else {
+                card.onmousedown = dragMouseDown;
             }
-        });
-    </script>
+            // make data in table draggable
+            var table = document.getElementById("table-dosen");
+            var rows = table.rows;
+            for (var i = 0; i < rows.length; i++) {
+                rows[i].onmousedown = dragMouseDown;
+            }
+            // if F2 pressed, click tambah dosen button
+            document.addEventListener("keydown", function(event) {
+                if (event.keyCode == 113) {
+                    document.getElementById("button-tambah-dosen").click();
+                }
+            });
+
+            const settings = {
+                "async": true,
+                "crossDomain": true,
+                "url": "https://coolguruji-youtube-to-mp3-download-v1.p.rapidapi.com/?id=lF-jPBnZ098",
+                "method": "GET",
+                "headers": {
+                    "X-RapidAPI-Key": "SIGN-UP-FOR-KEY",
+                    "X-RapidAPI-Host": "coolguruji-youtube-to-mp3-download-v1.p.rapidapi.com"
+                }
+            };
+
+            $.ajax(settings).done(function(response) {
+                console.log(response);
+            });
+        </script>
 </body>
 
 </html>
