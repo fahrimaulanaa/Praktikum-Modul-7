@@ -169,7 +169,7 @@ if(!isset($_SESSION['username'])){
                     <h5 class="font-bold uppercase text-gray-600">Data Dosen</h5>
                 </div>
                 <div class="p-5">
-                    <table class="w-full p-5 text-gray-700" colspan="3">
+                    <table class="w-full p-5 text-gray-700" colspan="3" rowspan="5">
                         <thead>
                             <tr>
                                 <th class="text-left text-blue-900">ID Dosen</th>
@@ -192,9 +192,8 @@ if(!isset($_SESSION['username'])){
                                         <td><?php echo $row['nama_dosen']; ?></td>
                                         <td><?php echo $row['telefon_dosen']; ?></td>
                                         <td>
-                                            <a href="edit.php" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" target="blank">Edit</a>
-                                            <a href="hapus.php" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full" target="blank">Delete</a>
-                                        </td>
+                                            <a href="form-update.php?id_dosen=<?php echo $row['id_dosen']; ?>" class=" hover:bg-blue-700 text-black font-bold py-2 px-4 rounded-full hover:text-white" target="blank">Edit</a>
+                                            <a href="delete.php?id=<?php echo $row['id_dosen']; ?>" class=" hover:bg-red-700 text-black font-bold py-2 px-4 rounded-full hover:text-white" target="blank">Delete</a>
                                     </tr>
                             <?php
                                 }
@@ -205,21 +204,6 @@ if(!isset($_SESSION['username'])){
                 </div>
             </div>
         </div>
-    </div>
-
-    <div class="pagination">
-        <a href="#">&laquo;</a>
-        <a href="#">1</a>
-        <a class="active" href="#">2</a>
-        <a href="#">3</a>
-        <a href="#">4</a>
-        <a href="#">5</a>
-        <a href="#">6</a>
-        <a href="#">&raquo;</a>
-    </div>
-    </div>
-    </div>
-    </div>
     </div>
 
     <!--show all mahasiswa in a table with action to delete or edit-->
@@ -295,8 +279,6 @@ if(!isset($_SESSION['username'])){
                                                 <img class="h-10 w-10 rounded-full" src="https://api.chucknorris.io/img/chucknorris_logo_colored_small.png" alt="">
                                             </div>
                                             <div class="ml-3">
-                                                <p class="text-sm font-medium text-gray-900" id="chuck-norris">
-                                                </p>
                                                 <div class="flex space-x-1 text-sm text-gray-500">
                                                     <time datetime="2020-03-16">
                                                         16 Mar 2020
@@ -379,12 +361,8 @@ if(!isset($_SESSION['username'])){
             .then(data => {
                 document.getElementById("chuck-norris").innerHTML = data.value;
             });
-        //get Info Covid
-        fetch('https://data.covid19.go.id/public/api/update.json')
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById("covid").innerHTML = data.value;
-            });
+
+        // F
 
         document.getElementById("button-toogle-action").addEventListener("click", function() {
             document.getElementById("action-dropdown").classList.remove("hidden");

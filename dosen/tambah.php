@@ -11,27 +11,34 @@
 
 <body>
     <h1 align="center">Tambah Data Dosen</h1>
-    <!--table in center and bordered-->
-    <table class="table table-bordered table-striped table-hover" align="center">
-        <form action="tambah.php" method="POST">
-            <tr>
-                <td>ID Dosen:</td>
-                <td><input type="text" name="id_dosen"></td>
-            </tr>
-            <tr>
-                <td>Nama Dosen:</td>
-                <td><input type="text" name="nama_dosen"></td>
-            </tr>
-            <tr>
-                <td>Nomor Telefon:</td>
-                <td><input type="text" name="telefon_dosen"></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td><input type="submit" value="Simpan" name="simpan"></td>
-            </tr>
-        </form>
-    </table>
+    <!-- make beautiful table in center -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <table class="table table-bordered">
+                    <form action="dosen-tambah.php" method="POST">
+                        <tr>
+                            <td>ID Dosen:</td>
+                            <td><input type="text" name="id_dosen"></td>
+                        </tr>
+                        <tr>
+                            <td>Nama Dosen:</td>
+                            <td><input type="text" name="nama_dosen"></td>
+                        </tr>
+                        <tr>
+                            <td>Telefon Dosen:</td>
+                            <td><input type="text" name="telefon_dosen"></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td><input type="submit" value="Simpan" name="simpan"></td>
+                        </tr>
+                    </form>
+                </table>
+            </div>
+        </div>
+    </div>
+    
 </body>
 
 </html>
