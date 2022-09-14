@@ -11,11 +11,11 @@ if(!isset($_SESSION['username'])){
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../public/style.css">
     <title>Halaman Admin Sipaling Universitas</title>
 </head>
 
 <body>
-    <script src="https://cdn.tailwindcss.com"></script>
     <nav class="bg-gray-800">
         <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
             <div class="relative flex items-center justify-between h-16">
@@ -42,7 +42,7 @@ if(!isset($_SESSION['username'])){
 
                             <a href="tambah.php" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" target="blank">Tambah Dosen</a>
 
-                            <a href="ubah.php" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Ubah Data Dosen</a>
+                            <a href="ubah.php" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" id="ubah-data-dosen">Ubah Data Dosen</a>
 
                             <a href="hapus.php" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Hapus Data Dosen</a>
                         </div>
@@ -334,6 +334,56 @@ if(!isset($_SESSION['username'])){
             </div>
         </div>
     </div>
+    <!-- show matakuliah in table -->
+    <div class="flex flex-wrap justify-center " id="card-matakuliah">
+        <div class="w-full p-4">
+            <div class="bg-white border rounded shadow">
+                <div class="border-b p-3">
+                    <h5 class="font-bold uppercase text-gray-600">Daftar Matakuliah</h5>
+                </div>
+                <div class="p-5">
+                    <table class="w-full p-5 text-gray-700" border="1" colspan="1">
+                        <thead>
+                            <tr>
+                                <th class="text-left text-blue-900">Kode</th>
+                                <th class="text-left text-blue-900">Nama Matakuliah</th>
+                                <th class="text-left text-blue-900">SKS</th>
+                                <th class="text-left text-blue-900">Id Dosen </th>
+                                <th class="text-left text-blue-900">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            include "conncet.php";
+                            $sql = "SELECT * FROM matakuliah";
+                            $result = mysqli_query($connect, $sql);
+                            $resultCheck = mysqli_num_rows($result);
+                            if ($resultCheck > 0) {
+                                $i = 1;
+                                while ($row = mysqli_fetch_assoc($result)) {
+                            ?>
+                                    <tr>
+                                        <td><?php echo $row['kode']; ?></td>
+                                        <td><?php echo $row['nama_matkul']; ?></td>
+                                        <td><?php echo $row['sks']; ?></td>
+                                        <td><?php echo $row['id_dosen']?></td>
+                                        <td>
+                                            <!--Select menu-->
+                                            <select name="action" id="action" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+                                                <option value="edit">Edit</option>
+                                                <option value="delete">Delete</option>
+                                            </select>
+                                    </tr>
+                            <?php
+                                    $i++;
+                                }
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     <script>
         window.addEventListener('resize', function(event) {
             if (window.innerWidth > 640) {
@@ -410,8 +460,18 @@ if(!isset($_SESSION['username'])){
         } else {
             card.onmousedown = dragMouseDown;
         }
-
-        //live 
+        // make data in table draggable
+        var table = document.getElementById("table-dosen");
+        var rows = table.rows;
+        for (var i = 0; i < rows.length; i++) {
+            rows[i].onmousedown = dragMouseDown;
+        }
+        // if F2 pressed, click tambah dosen button
+        document.addEventListener("keydown", function(event) {
+            if (event.keyCode == 113) {
+                document.getElementById("button-tambah-dosen").click();
+            }
+        });
     </script>
 </body>
 

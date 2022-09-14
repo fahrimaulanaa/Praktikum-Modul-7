@@ -1,3 +1,10 @@
+<?php
+// if user have session, redirect to admin.php
+session_start();
+if(isset($_SESSION['username'])){
+    header('Location: admin.php');
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
