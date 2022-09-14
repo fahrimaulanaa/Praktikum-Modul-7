@@ -62,6 +62,7 @@ if(isset($_GET['id_dosen'])){
     $sql = "DELETE FROM dosen WHERE id_dosen='$id_dosen'";
     $query = mysqli_query($connect, $sql);
     if($query){
+        echo "Data berhasil dihapus";
         header('Location: hapus.php');
     }else{
         header('Location: hapus.php');
