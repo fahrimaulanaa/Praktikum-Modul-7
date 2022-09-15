@@ -26,7 +26,7 @@ $num = mysqli_num_rows($result);
             <th>Dosen Pengajar</th>
             <th>Aksi</th>
         </tr>
-     </table>
+    </table>
 </body>
 </html>
 
