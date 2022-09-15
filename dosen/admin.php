@@ -36,6 +36,7 @@ $currentTime = time();
 </head>
 
 <body>
+    <script src="../node_modules/tw-elements/dist/js/index.min.js"></script>
     <nav class="bg-gray-800">
         <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
             <div class="relative flex items-center justify-between h-16">
@@ -73,7 +74,9 @@ $currentTime = time();
                         <div>
                             <button type="button" class="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white" id="user-menu-button" aria-expanded="false" aria-haspopup="true" id="btn-user-menu">
                                 <span class="sr-only">Open user menu</span>
-                                <a href="logout.php"><h1 class="text-white font-bold">Logout</h1></a>
+                                <a href="logout.php">
+                                    <h1 class="text-white font-bold">Logout</h1>
+                                </a>
                             </button>
                         </div>
                         <div class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 hidden" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1" id="user-menu-mini">
@@ -214,6 +217,7 @@ $currentTime = time();
                                         <td>
                                             <a href="form-update.php?id_dosen=<?php echo $row['id_dosen']; ?>" class=" hover:bg-blue-700 text-black font-bold py-2 px-4 rounded-full hover:text-white" target="blank">Edit</a>
                                             <a href="delete.php?id=<?php echo $row['id_dosen']; ?>" class=" hover:bg-red-700 text-black font-bold py-2 px-4 rounded-full hover:text-white" target="blank">Delete</a>
+                                        </td>
                                     </tr>
                             <?php
                                 }
@@ -226,7 +230,6 @@ $currentTime = time();
         </div>
     </div>
 
-    <!--show all mahasiswa in a table with action to delete or edit-->
     <div class="flex flex-wrap justify-center" id="card-mahasiswa">
         <div class="w-full p-4">
             <div class="bg-white border rounded shadow">
@@ -263,6 +266,8 @@ $currentTime = time();
                                                 <option value="edit">Edit</option>
                                                 <option value="delete">Delete</option>
                                             </select>
+                                        </td>
+
                                     </tr>
                             <?php
                                     $i++;
@@ -289,7 +294,7 @@ $currentTime = time();
                             <div class="bg-white border rounded shadow p-2">
                                 <div class="flex flex-col">
                                     <div class="flex-1 p-6 flex flex-col justify-between">
-                                        <div class="flex-1">    
+                                        <div class="flex-1">
                                         </div>
                                         <div class="mt-6 flex items-center">
                                             <div class="flex-shrink-0">
@@ -477,13 +482,13 @@ $currentTime = time();
             } else {
                 card.onmousedown = dragMouseDown;
             }
-            // make data in table draggable
+
             var table = document.getElementById("table-dosen");
             var rows = table.rows;
             for (var i = 0; i < rows.length; i++) {
                 rows[i].onmousedown = dragMouseDown;
             }
-            // if F2 pressed, click tambah dosen button
+
             document.addEventListener("keydown", function(event) {
                 if (event.keyCode == 113) {
                     document.getElementById("button-tambah-dosen").click();
